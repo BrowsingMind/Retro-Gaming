@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaderboard - RETRO ARCADE ZONE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    
+    :root {
+      --primary: #ff00c8;
+      --secondary: #3f00b5;
+      --accent: #0ff;
+      --bg-dark: #0c0c24;
+      --bg-darker: #07071a;
+      --text: #fff;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      font-family: 'VT323', monospace;
+      color: var(--text);
+      overflow-x: hidden;
+      font-size: 18px;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    
+    nav {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-bottom: 2px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 20px;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+    }
+    
+    .logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      text-shadow: 2px 2px 0 var(--secondary);
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo span {
+      color: var(--accent);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 20px;
+    }
+    
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .nav-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--accent);
+    }
+    
+    .nav-links a.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2rem;
+      color: var(--accent);
+      text-shadow: 2px 2px 0 #000;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .leaderboard {
+      background-color: rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--primary);
+      padding: 20px;
+    }
+    
+    .leaderboard-header {
+      display: grid;
+      grid-template-columns: 50px 1fr 100px;
+      padding: 10px;
+      border-bottom: 1px solid var(--primary);
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+    
+    .leaderboard-row {
+      display: grid;
+      grid-template-columns: 50px 1fr 100px;
+      padding: 15px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      align-items: center;
+      transition: all 0.3s;
+    }
+    
+    .leaderboard-row:hover {
+      background-color: rgba(255, 0, 200, 0.1);
+    }
+    
+    .player-rank {
+      font-family: 'Press Start 2P', cursive;
+      color: var(--primary);
+    }
+    
+    .player-name {
+      font-weight: bold;
+    }
+    
+    .player-score {
+      color: var(--accent);
+      text-align: right;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.9rem;
+    }
+    
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: #fff;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 2px solid var(--primary);
+      }
+      
+      .nav-links.show {
+        display: flex;
+      }
+      
+      .nav-links li {
+        margin: 10px 0;
+      }
+      
+      .menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">RETRO<span>ARCADE</span></a>
+      <button class="menu-btn">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="games.html">GAMES</a></li>
+        <li><a href="leaderboard.html">LEADERBOARD</a></li>
+        <li><a href="news.html">NEWS</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+        <li><a href="profile.html">PROFILE</a></li>
+        <li><a href="settings.html">SETTINGS</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <h1>LEADERBOARD</h1>
+    <div class="leaderboard">
+      <div class="leaderboard-header">
+        <div>RANK</div>
+        <div>PLAYER</div>
+        <div>SCORE</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">1</div>
+        <div class="player-name">PixelMaster</div>
+        <div class="player-score">10,500</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">2</div>
+        <div class="player-name">NeonBlaze</div>
+        <div class="player-score">9,800</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">3</div>
+        <div class="player-name">StarCrusader</div>
+        <div class="player-score">8,750</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">4</div>
+        <div class="player-name">RetroRacer</div>
+        <div class="player-score">7,600</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">5</div>
+        <div class="player-name">ArcadeAce</div>
+        <div class="player-score">6,900</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">6</div>
+        <div class="player-name">CosmoKing</div>
+        <div class="player-score">6,200</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">7</div>
+        <div class="player-name">PixelWizard</div>
+        <div class="player-score">5,800</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">8</div>
+        <div class="player-name">NeonKnight</div>
+        <div class="player-score">5,400</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">9</div>
+        <div class="player-name">StarVoyager</div>
+        <div class="player-score">5,100</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="player-rank">10</div>
+        <div class="player-name">RetroRogue</div>
+        <div class="player-score">4,900</div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="common.js"></script>
+  <script>
+    // Star animations
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 5}s`;
+      starsContainer.appendChild(star);
+    }
+    
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

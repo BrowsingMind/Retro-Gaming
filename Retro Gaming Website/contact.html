@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact - RETRO ARCADE ZONE</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    
+    :root {
+      --primary: #ff00c8;
+      --secondary: #3f00b5;
+      --accent: #0ff;
+      --bg-dark: #0c0c24;
+      --bg-darker: #07071a;
+      --text: #fff;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      font-family: 'VT323', monospace;
+      color: var(--text);
+      overflow-x: hidden;
+      font-size: 18px;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    
+    nav {
+      background-color: rgba(0, 0, 0, 0.8);
+      border-bottom: 2px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 20px;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+    }
+    
+    .logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      text-shadow: 2px 2px 0 var(--secondary);
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo span {
+      color: var(--accent);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 20px;
+    }
+    
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .nav-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--accent);
+    }
+    
+    .nav-links a.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2rem;
+      color: var(--accent);
+      text-shadow: 2px 2px 0 #000;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .contact-content {
+      background-color: rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--primary);
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+    
+    .contact-content p {
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--accent);
+      color: var(--text);
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+    }
+    
+    .submit-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .social-link {
+      font-size: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .social-link:hover {
+      color: var(--primary);
+      transform: scale(1.2);
+    }
+    
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: #fff;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 2px solid var(--primary);
+      }
+      
+      .nav-links.show {
+        display: flex;
+      }
+      
+      .nav-links li {
+        margin: 10px 0;
+      }
+      
+      .menu-btn {
+        display: block;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .contact-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">RETRO<span>ARCADE</span></a>
+      <button class="menu-btn">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="games.html">GAMES</a></li>
+        <li><a href="leaderboard.html">LEADERBOARD</a></li>
+        <li><a href="news.html">NEWS</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+        <li><a href="profile.html">PROFILE</a></li>
+        <li><a href="settings.html">SETTINGS</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <h1>CONTACT US</h1>
+    <div class="contact-content">
+      <p>Got a question, suggestion, or just want to say hi? Drop us a message below, and we'll get back to you faster than a speedrun in Space Adventure!</p>
+      
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">SEND MESSAGE</button>
+      </form>
+      
+      <div class="social-links">
+        <a href="#" class="social-link">📘</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">📸</a>
+        <a href="#" class="social-link">🎮</a>
+      </div>
+    </div>
+  </div>
+  
+  <script src="common.js"></script>
+  <script>
+    // Star animations
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 5}s`;
+      starsContainer.appendChild(star);
+    }
+    
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+    
+    // Form submission (mock)
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert('Message sent! Thanks for reaching out.');
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>
